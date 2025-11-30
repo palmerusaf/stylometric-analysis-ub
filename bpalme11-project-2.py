@@ -39,12 +39,17 @@ for h4 in h4s:
 # darwin letters for a control
 with open("./darwin.html") as f:
     soup = BeautifulSoup(f, "html.parser")
-    txt = soup.get_text(strip=True, separator=" ")
-    df.loc[len(df)] = ["C", txt]
+ps = soup.find_all("p")
+for p in ps:
+    if not p.get_text(strip=True).startswith("LETTER"):
+        continue
+    contents = ""
+    for sib in p.next_siblings:
+        contents += sib.get_text(strip=True, separator=" ")
+    df.loc[len(df)] = ["C", contents]
 
 
 # clean docs
-
 stopWords = {
     "the",
     "and",
@@ -92,3 +97,5 @@ def avgSent(text):
 
 
 df["avgSent"] = df["cleanTxt"].apply(avgSent)
+# __AUTO_GENERATED_PRINT_VAR_START__
+print(f" df: {str(df)}")  # __AUTO_GENERATED_PRINT_VAR_END__
