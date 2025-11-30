@@ -12,13 +12,29 @@ pTags = soup.find_all("p")
 for p in pTags:
     if not p.get_text(strip=True).startswith("Ted:"):
         continue
-    print(RED)
-    print(p)
-    print(RESET)
     blkQ = p.find_next("blockquote")
     if not blkQ:
         continue
-    print(GREEN)
-    print(blkQ)
-    print(RESET)
     uDocs.append(blkQ.get_text(strip=True))
+
+with open("./t-docs.html") as f:
+    soup = BeautifulSoup(f, "html.parser")
+tDocs = []
+
+h4s = soup.find_all("h4")
+for h4 in h4s:
+    h4Text = h4.get_text()
+    if not h4Text.startswith("From Ted to") or "(T-" not in h4Text:
+        continue
+    contents = ""
+    for sib in h4.next_siblings:
+        if sib.name == "h4" or sib.name == "h3" and sib.get_text() == "Sources":
+            break
+        contents += sib.get_text(strip=True, separator=" ")
+    # print(RED)
+    # print(h4Text)
+    # print(RESET)
+    # print(GREEN)
+    # print(contents)
+    # print(RESET)
+    tDocs.append(contents)
