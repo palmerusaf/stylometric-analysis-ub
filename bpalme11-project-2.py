@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import re
 
 
 # https://www.thetedkarchive.com/library/theo-slade-the-bombings-communications-of-ted-kaczynski-as-part-of-his-terror-campaign
@@ -32,3 +33,44 @@ for h4 in h4s:
             break
         contents += sib.get_text(strip=True, separator=" ")
     tDocs.append(contents)
+
+# clean docs
+
+stopWords = {
+    "the",
+    "and",
+    "is",
+    "to",
+    "of",
+    "a",
+    "in",
+    "that",
+    "it",
+    "with",
+    "as",
+    "for",
+    "was",
+    "on",
+    "be",
+    "at",
+    "by",
+    "an",
+    "this",
+    "which",
+    "or",
+    "from",
+    "but",
+    "not",
+}
+
+
+def clean(text):
+    text = text.lower()
+    text = re.sub(r"[^a-z\s,.!?]", " ", text)
+    tokens = text.split()
+    tokens = [t for t in tokens if t not in stopWords]
+    return " ".join(tokens)
+
+
+tClean = [clean(doc) for doc in tDocs]
+uClean = [clean(doc) for doc in uDocs]
