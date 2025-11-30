@@ -1,13 +1,10 @@
 from bs4 import BeautifulSoup
 
 
-RED = "\033[31m"
-GREEN = "\033[32m"
-RESET = "\033[0m"  # Resets all formatting
-
+# extract udocs from html
+uDocs = []
 with open("./u-docs.html") as f:
     soup = BeautifulSoup(f, "html.parser")
-uDocs = []
 pTags = soup.find_all("p")
 for p in pTags:
     if not p.get_text(strip=True).startswith("Ted:"):
@@ -16,17 +13,12 @@ for p in pTags:
     if not blk:
         continue
     blkText = blk.get_text(strip=True, separator=" ")
-    # print(RED)
-    # print(p)
-    # print(RESET)
-    # print(GREEN)
-    # print(blkText)
-    # print(RESET)
     uDocs.append(blkText)
 
+# extract tdocs from html
+tDocs = []
 with open("./t-docs.html") as f:
     soup = BeautifulSoup(f, "html.parser")
-tDocs = []
 h4s = soup.find_all("h4")
 for h4 in h4s:
     h4Text = h4.get_text()
@@ -37,10 +29,4 @@ for h4 in h4s:
         if sib.name == "h4" or sib.name == "h3" and sib.get_text() == "Sources":
             break
         contents += sib.get_text(strip=True, separator=" ")
-    # print(RED)
-    # print(h4Text)
-    # print(RESET)
-    # print(GREEN)
-    # print(contents)
-    # print(RESET)
     tDocs.append(contents)
