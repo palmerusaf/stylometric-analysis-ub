@@ -69,9 +69,20 @@ stopWords = {
 def clean(text):
     text = text.lower()
     text = re.sub(r"[^a-z\s,.!?]", " ", text)
+    text = re.sub(r"\.+", ".", text)
     tokens = text.split()
     tokens = [t for t in tokens if t not in stopWords]
     return " ".join(tokens)
 
 
 df["cleanTxt"] = df["rawTxt"].apply(clean)
+
+
+def avgSent(text):
+    sents = re.split(r"[.!?]", text)
+    lengths = [len(s.split()) for s in sents]
+    return sum(lengths) / len(lengths) if lengths else 0
+
+
+df["avgSent"] = df["cleanTxt"].apply(avgSent)
+print(df["avgSent"])
