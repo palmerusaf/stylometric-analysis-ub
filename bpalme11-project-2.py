@@ -13,10 +13,17 @@ pTags = soup.find_all("p")
 for p in pTags:
     if not p.get_text(strip=True).startswith("Ted:"):
         continue
-    blkQ = p.find_next("blockquote")
-    if not blkQ:
+    blk = p.find_next("blockquote")
+    if not blk:
         continue
-    uDocs.append(blkQ.get_text(strip=True))
+    blkText = blk.get_text(strip=True, separator=" ")
+    # print(RED)
+    # print(p)
+    # print(RESET)
+    # print(GREEN)
+    # print(blkText)
+    # print(RESET)
+    uDocs.append(blkText)
 
 with open("./t-docs.html") as f:
     soup = BeautifulSoup(f, "html.parser")
