@@ -1,4 +1,7 @@
 from bs4 import BeautifulSoup
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.decomposition import PCA
+import plotly.express as px
 import pandas as pd
 import re
 
@@ -6,11 +9,10 @@ import re
 # https://www.thetedkarchive.com/library/theo-slade-the-bombings-communications-of-ted-kaczynski-as-part-of-his-terror-campaign
 # extract udocs from html
 
-df = pd.DataFrame(columns=["docType", "rawTxt"])
+df = pd.DataFrame(columns=["Doc Type", "rawTxt"])
 with open("./u-docs.html") as f:
     soup = BeautifulSoup(f, "html.parser")
 pTags = soup.find_all("p")
-count = 1
 for p in pTags:
     if not p.get_text(strip=True).startswith("Ted:"):
         continue
@@ -18,7 +20,7 @@ for p in pTags:
     if not blk:
         continue
     blkText = blk.get_text(strip=True, separator=" ")
-    df.loc[len(df)] = ["U", blkText]
+    df.loc[len(df)] = ["Unabomber", blkText]
 
 # https://www.thetedkarchive.com/library/ted-kaczynski-david-kaczynski-letters-to-from-david-kaczynski
 # extract tdocs from html
@@ -34,7 +36,8 @@ for h4 in h4s:
         if sib.name == "h4" or sib.name == "h3" and sib.get_text() == "Sources":
             break
         contents += sib.get_text(strip=True, separator=" ")
-    df.loc[len(df)] = ["T", contents]
+    df.loc[len(df)] = ["Ted Letters", contents]
+
 
 # darwin letters for a control
 with open("./darwin.html") as f:
@@ -46,7 +49,7 @@ for p in ps:
     contents = ""
     for sib in p.next_siblings:
         contents += sib.get_text(strip=True, separator=" ")
-    df.loc[len(df)] = ["C", contents]
+    df.loc[len(df)] = ["Darwin Control", contents]
 
 
 # clean docs
@@ -97,5 +100,24 @@ def avgSent(text):
 
 
 df["avgSent"] = df["cleanTxt"].apply(avgSent)
-# __AUTO_GENERATED_PRINT_VAR_START__
-print(f" df: {str(df)}")  # __AUTO_GENERATED_PRINT_VAR_END__
+
+
+X = TfidfVectorizer(max_features=5000).fit_transform(df["cleanTxt"])
+
+pca = PCA(n_components=3)
+pcs = pca.fit_transform(X.toarray())
+
+df["PC1"] = pcs[:, 0]
+df["PC2"] = pcs[:, 1]
+df["PC3"] = pcs[:, 2]
+
+fig = px.scatter_3d(
+    df,
+    x="PC1",
+    y="PC2",
+    z="PC3",
+    color="Doc Type",
+    title="TF-IDF Squeezed into 3D PCA",
+)
+
+fig.show()
