@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-nodemon -e Rmd --exec ./build.sh
+nodemon ./bpalme11-project-2.py
