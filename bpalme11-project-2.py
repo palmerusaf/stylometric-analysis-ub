@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 
 
+# https://www.thetedkarchive.com/library/theo-slade-the-bombings-communications-of-ted-kaczynski-as-part-of-his-terror-campaign
 # extract udocs from html
 uDocs = []
 with open("./u-docs.html") as f:
@@ -15,6 +16,7 @@ for p in pTags:
     blkText = blk.get_text(strip=True, separator=" ")
     uDocs.append(blkText)
 
+# https://www.thetedkarchive.com/library/ted-kaczynski-david-kaczynski-letters-to-from-david-kaczynski
 # extract tdocs from html
 tDocs = []
 with open("./t-docs.html") as f:
