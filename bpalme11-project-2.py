@@ -36,6 +36,13 @@ for h4 in h4s:
         contents += sib.get_text(strip=True, separator=" ")
     df.loc[len(df)] = ["T", contents]
 
+# darwin letters for a control
+with open("./darwin.html") as f:
+    soup = BeautifulSoup(f, "html.parser")
+    txt = soup.get_text(strip=True, separator=" ")
+    df.loc[len(df)] = ["C", txt]
+
+
 # clean docs
 
 stopWords = {
@@ -85,4 +92,3 @@ def avgSent(text):
 
 
 df["avgSent"] = df["cleanTxt"].apply(avgSent)
-print(df["avgSent"])
