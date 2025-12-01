@@ -129,7 +129,7 @@ fig = px.scatter_3d(
     y="PC2",
     z="PC3",
     color="Doc Type",
-    title="TF-IDF Squeezed into 3D PCA",
+    title="TF-IDF 3D PCA Simple Bag of Words",
 )
 
 # fig.show()
@@ -153,4 +153,35 @@ fig = px.box(
     color="Doc Type",
     points="all",
 )
-fig.show()
+
+# In his study, Reference GrieveGrieve (2007) finds that character n-grams (up to about 6-grams) can be useful as authorship markers along with various measures of word and punctuation distribution, and shows how with a decreasing number of candidate authors in a closed set, other features, including some measures of lexical richness and average word and sentence length, might have some role to play, but generally lack a strong predictive power.
+
+# fig.show()
+# https://www.cambridge.org/core/elements/idea-of-progress-in-forensic-authorship-analysis/6A4F7668B4831CCD7DBF74DECA3EBA06
+X = TfidfVectorizer(
+    analyzer="char",
+    ngram_range=(2, 6),
+    min_df=2,
+    max_features=10000,
+).fit_transform(df["rawTxt"])
+
+pca = PCA(n_components=3)
+pcs = pca.fit_transform(X.toarray())
+
+df["PC1"] = pcs[:, 0]
+df["PC2"] = pcs[:, 1]
+df["PC3"] = pcs[:, 2]
+
+fig = px.scatter_3d(
+    df,
+    x="PC1",
+    y="PC2",
+    z="PC3",
+    color="Doc Type",
+    title="TF-IDF 3D PCA 6-grams Grieve (2007)",
+)
+# fig.show()
+
+# legit stylometry
+# https://www.nature.com/articles/s41599-025-05986-3
+# burrows delta mds scatter
