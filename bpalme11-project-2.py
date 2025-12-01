@@ -41,15 +41,31 @@ for h4 in soup.find_all("h4"):
 # darwin letters for a control
 with open("./darwin.html") as f:
     soup = BeautifulSoup(f, "html.parser")
-for p in soup.find_all("p"):
-    if not p.get_text(strip=True).startswith("LETTER"):
-        continue
-    contents = []
 
-    for sib in p.next_siblings:
-        if getattr(sib, "name", None) == "h2":
-            break
-        contents.append(sib.get_text(strip=True, separator=" "))
+p_tags = soup.find_all("p")
+
+current_letter = None
+contents = []
+
+for p in p_tags:
+    text = p.get_text(strip=True, separator=" ")
+
+    if text.startswith("LETTER"):
+        # save previous letter first
+        if current_letter is not None and contents:
+            rows.append(("Darwin Control", " ".join(contents)))
+
+        # start new collection
+        current_letter = text
+        contents = []
+        continue
+
+    # inside letter
+    if current_letter is not None:
+        contents.append(text)
+
+# save last letter
+if current_letter is not None and contents:
     rows.append(("Darwin Control", " ".join(contents)))
 
 df = pd.DataFrame(rows, columns=["Doc Type", "rawTxt"])
