@@ -111,6 +111,9 @@ def clean(text):
 df["cleanTxt"] = df["rawTxt"].apply(clean)
 
 # TF-IDF TO 3D PCA
+# good for content similarity
+# https://www.geeksforgeeks.org/machine-learning/understanding-tf-idf-term-frequency-inverse-document-frequency/
+# https://www.ibm.com/think/topics/principal-component-analysis
 X = TfidfVectorizer(max_features=5000).fit_transform(df["cleanTxt"])
 
 pca = PCA(n_components=3)
