@@ -70,41 +70,12 @@ if current_letter is not None and contents:
 
 df = pd.DataFrame(rows, columns=["Doc Type", "rawTxt"])
 
-# clean docs
-stopWords = {
-    "the",
-    "and",
-    "is",
-    "to",
-    "of",
-    "a",
-    "in",
-    "that",
-    "it",
-    "with",
-    "as",
-    "for",
-    "was",
-    "on",
-    "be",
-    "at",
-    "by",
-    "an",
-    "this",
-    "which",
-    "or",
-    "from",
-    "but",
-    "not",
-}
-
 
 def clean(text):
     text = text.lower()
     text = re.sub(r"[^a-z\s,.!?]", " ", text)
     text = re.sub(r"\.+", ".", text)
     tokens = text.split()
-    tokens = [t for t in tokens if t not in stopWords]
     return " ".join(tokens)
 
 
@@ -114,7 +85,9 @@ df["cleanTxt"] = df["rawTxt"].apply(clean)
 # good for content similarity
 # https://www.geeksforgeeks.org/machine-learning/understanding-tf-idf-term-frequency-inverse-document-frequency/
 # https://www.ibm.com/think/topics/principal-component-analysis
-X = TfidfVectorizer(max_features=5000).fit_transform(df["cleanTxt"])
+X = TfidfVectorizer(max_features=5000, stop_words="english").fit_transform(
+    df["cleanTxt"]
+)
 
 pca = PCA(n_components=3)
 pcs = pca.fit_transform(X.toarray())
