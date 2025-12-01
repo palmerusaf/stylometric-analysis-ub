@@ -27,15 +27,20 @@ with open("./t-docs.html") as f:
     soup = BeautifulSoup(f, "html.parser")
 for h4 in soup.find_all("h4"):
     h4Text = h4.get_text()
-    if not h4Text.startswith("From Ted to") or "(T-" not in h4Text:
-        continue
-
-    contents = []
-    for sib in h4.next_siblings:
-        if sib.name == "h4" or (sib.name == "h3" and sib.get_text() == "Sources"):
-            break
-        contents.append(sib.get_text(strip=True, separator=" "))
-    rows.append(("Ted Letters", " ".join(contents)))
+    if h4Text.startswith("From Ted to") and "(T-" in h4Text:
+        contents = []
+        for sib in h4.next_siblings:
+            if sib.name == "h4" or (sib.name == "h3" and sib.get_text() == "Sources"):
+                break
+            contents.append(sib.get_text(strip=True, separator=" "))
+        rows.append(("Ted Letters", " ".join(contents)))
+    if h4Text.startswith("From Dave"):
+        contents = []
+        for sib in h4.next_siblings:
+            if sib.name == "h4" or (sib.name == "h3" and sib.get_text() == "Sources"):
+                break
+            contents.append(sib.get_text(strip=True, separator=" "))
+        rows.append(("Dave Letters", " ".join(contents)))
 
 
 # darwin letters for a control
@@ -85,9 +90,7 @@ df["cleanTxt"] = df["rawTxt"].apply(clean)
 # good for content similarity
 # https://www.geeksforgeeks.org/machine-learning/understanding-tf-idf-term-frequency-inverse-document-frequency/
 # https://www.ibm.com/think/topics/principal-component-analysis
-X = TfidfVectorizer(max_features=5000, stop_words="english").fit_transform(
-    df["cleanTxt"]
-)
+X = TfidfVectorizer(max_features=5000).fit_transform(df["cleanTxt"])
 
 pca = PCA(n_components=3)
 pcs = pca.fit_transform(X.toarray())
@@ -105,7 +108,7 @@ fig = px.scatter_3d(
     title="TF-IDF 3D PCA Simple Bag of Words",
 )
 
-# fig.show()
+fig.show()
 
 
 # avg sent len box whisker plot
@@ -157,4 +160,5 @@ fig = px.scatter_3d(
 
 # legit stylometry
 # https://www.nature.com/articles/s41599-025-05986-3
+# https://fastdatascience.com/natural-language-processing/fast-stylometry-python-library/
 # burrows delta mds scatter
