@@ -110,16 +110,7 @@ def clean(text):
 
 df["cleanTxt"] = df["rawTxt"].apply(clean)
 
-
-def avgSent(text):
-    sents = re.split(r"[.!?]", text)
-    lengths = [len(s.split()) for s in sents]
-    return sum(lengths) / len(lengths) if lengths else 0
-
-
-df["avgSent"] = df["cleanTxt"].apply(avgSent)
-
-
+# TF-IDF TO 3D PCA
 X = TfidfVectorizer(max_features=5000).fit_transform(df["cleanTxt"])
 
 pca = PCA(n_components=3)
@@ -138,4 +129,25 @@ fig = px.scatter_3d(
     title="TF-IDF Squeezed into 3D PCA",
 )
 
+# fig.show()
+
+
+# avg sent len box whisker plot
+def avgSent(text):
+    sents = re.split(r"[.!?]", text)
+    lengths = [len(s.split()) for s in sents]
+    return sum(lengths) / len(lengths) if lengths else 0
+
+
+df["Avg Sent Length"] = df["cleanTxt"].apply(avgSent)
+
+# plotly box whisker on avg sent for each doc type
+fig = px.box(
+    df,
+    x="Doc Type",
+    y="Avg Sent Length",
+    title="Average Sentence Length by Document Type",
+    color="Doc Type",
+    points="all",
+)
 fig.show()
