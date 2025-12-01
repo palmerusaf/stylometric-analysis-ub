@@ -78,8 +78,6 @@ df = pd.DataFrame(rows, columns=["Doc Type", "rawTxt"])
 
 def clean(text):
     text = text.lower()
-    text = re.sub(r"[^a-z\s,.!?]", " ", text)
-    text = re.sub(r"\.+", ".", text)
     tokens = text.split()
     return " ".join(tokens)
 
@@ -132,7 +130,7 @@ fig = px.box(
 
 # In his study, Reference GrieveGrieve (2007) finds that character n-grams (up to about 6-grams) can be useful as authorship markers along with various measures of word and punctuation distribution, and shows how with a decreasing number of candidate authors in a closed set, other features, including some measures of lexical richness and average word and sentence length, might have some role to play, but generally lack a strong predictive power.
 
-# fig.show()
+fig.show()
 # https://www.cambridge.org/core/elements/idea-of-progress-in-forensic-authorship-analysis/6A4F7668B4831CCD7DBF74DECA3EBA06
 X = TfidfVectorizer(
     analyzer="char",
@@ -156,7 +154,7 @@ fig = px.scatter_3d(
     color="Doc Type",
     title="TF-IDF 3D PCA 6-grams Grieve (2007)",
 )
-# fig.show()
+fig.show()
 
 # legit stylometry
 # https://www.nature.com/articles/s41599-025-05986-3
