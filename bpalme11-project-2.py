@@ -117,7 +117,7 @@ fig = px.scatter_3d(
     title="TF-IDF 3D PCA Simple Bag of Words",
 )
 
-# fig.show()
+fig.show()
 
 
 # avg sent len box whisker plot
@@ -139,9 +139,10 @@ fig = px.box(
     points="all",
 )
 
+
 # In his study, Reference GrieveGrieve (2007) finds that character n-grams (up to about 6-grams) can be useful as authorship markers along with various measures of word and punctuation distribution, and shows how with a decreasing number of candidate authors in a closed set, other features, including some measures of lexical richness and average word and sentence length, might have some role to play, but generally lack a strong predictive power.
 
-# fig.show()
+fig.show()
 # https://www.cambridge.org/core/elements/idea-of-progress-in-forensic-authorship-analysis/6A4F7668B4831CCD7DBF74DECA3EBA06
 X = TfidfVectorizer(
     analyzer="char",
@@ -165,4 +166,24 @@ fig = px.scatter_3d(
     color="Doc Type",
     title="TF-IDF 3D PCA 6-grams Grieve (2007)",
 )
-# fig.show()
+fig.show()
+
+X = TfidfVectorizer(max_features=5000).fit_transform(df["cleanTxt"])
+
+pca = PCA(n_components=3)
+pcs = pca.fit_transform(X, df[["Avg Sent Length"]].to_numpy())
+
+df["PC1"] = pcs[:, 0]
+df["PC2"] = pcs[:, 1]
+df["PC3"] = pcs[:, 2]
+
+fig = px.scatter_3d(
+    df,
+    x="PC1",
+    y="PC2",
+    z="PC3",
+    color="Doc Type",
+    title="TF-IDF 3D PCA Simple Bag of Words and Sent Length",
+)
+
+fig.show()
