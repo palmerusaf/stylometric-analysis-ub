@@ -1,8 +1,18 @@
 from bs4 import BeautifulSoup
+import os
+import nltk
+from collections import Counter
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.cluster.hierarchy import dendrogram, linkage
+from scipy.spatial.distance import squareform
+from matplotlib.colors import ListedColormap
+from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import PCA
 import plotly.express as px
+import pandas as pd
 import re
 
 
@@ -187,3 +197,142 @@ fig = px.scatter_3d(
 )
 
 fig.show()
+
+# legit stylometry
+# https://www.nature.com/articles/s41599-025-05986-3
+# https://fastdatascience.com/natural-language-processing/fast-stylometry-python-library/
+# burrows delta mds scatter
+
+
+# 1. Load texts from the folder
+def load_texts():
+    texts = {}
+    for dt in df["Doc Type"].unique():
+        i = 1
+        for txt in df[df["Doc Type"] == dt]["rawTxt"]:
+            texts[f"{dt}_{i}"] = txt
+            i += 1
+    return texts
+
+
+# 2. Preprocess texts
+def preprocess(text):
+    tokens = word_tokenize(text.lower())  # Tokenise and lowercase
+    filtered_tokens = [word for word in tokens if word.isalnum()]  # Remove punctuation
+    return filtered_tokens
+
+
+# 3. Compute word frequencies
+def compute_frequencies(tokenised_texts, mfw=100):
+    all_tokens = []
+    for tokens in tokenised_texts.values():
+        all_tokens.extend(tokens)
+    most_common_words = [
+        word for word, _ in Counter(all_tokens).most_common(mfw)
+    ]  # Most frequent words (MFW)
+
+    frequencies = {}
+    for name, tokens in tokenised_texts.items():
+        word_counts = Counter(tokens)
+        frequencies[name] = {word: word_counts[word] for word in most_common_words}
+    return pd.DataFrame(frequencies).fillna(0)
+
+
+# 4. Calculate z-scores
+def calculate_z_scores(frequency_matrix):
+    return frequency_matrix.apply(lambda col: (col - col.mean()) / col.std(), axis=1)
+
+
+# 5. Compute Burrows's Delta
+def compute_delta(z_matrix):
+    delta_matrix = pd.DataFrame(index=z_matrix.columns, columns=z_matrix.columns)
+    for text1 in z_matrix.columns:
+        for text2 in z_matrix.columns:
+            delta = np.mean(np.abs(z_matrix[text1] - z_matrix[text2]))
+            delta_matrix.loc[text1, text2] = delta
+    # Symmetrise the matrix
+    delta_matrix = delta_matrix.fillna(0)  # Replace NaNs
+    delta_matrix = (delta_matrix + delta_matrix.T) / 2  # Ensure symmetry
+    np.fill_diagonal(delta_matrix.values, 0)  # Diagonal must be 0
+    return delta_matrix
+
+
+# 6. Extract Groups for Colour Coding
+def extract_groups(filenames):
+    """
+    Extract groups from filenames based on the text before the first `_`.
+
+    Args:
+        filenames (list): List of filenames.
+
+    Returns:
+        list: Groups for each filename.
+    """
+    return [filename.split("_")[0] for filename in filenames]
+
+
+# 7. Visualise Delta Matrix with Colour-Coded Dendrogram
+def plot_coloured_dendrogram(delta_matrix, groups, save_as=None):
+    """
+    Visualise the Burrows's Delta matrix using a colour-coded dendrogram.
+
+    Args:
+        delta_matrix (pd.DataFrame): Pairwise distances between texts.
+        groups (list): Groups for colour coding.
+        save_as (str, optional): File path to save the plot. Defaults to None.
+    """
+    # Convert the Delta matrix to a condensed distance matrix
+    condensed_matrix = squareform(delta_matrix.values)
+
+    # Perform hierarchical clustering
+    linkage_matrix = linkage(condensed_matrix, method="average")
+
+    # Map groups to colours
+    unique_groups = list(set(groups))
+    cmap = ListedColormap(plt.cm.tab10(np.linspace(0, 1, len(unique_groups))))
+    colours = {
+        group: cmap(i / len(unique_groups)) for i, group in enumerate(unique_groups)
+    }
+
+    # Create the dendrogram with colour-coded labels
+    plt.figure(figsize=(12, 10))
+    dendrogram(
+        linkage_matrix,
+        labels=delta_matrix.columns,
+        leaf_rotation=90,
+        leaf_font_size=10,
+        color_threshold=0,
+    )
+
+    # Apply colour coding to the labels
+    ax = plt.gca()
+    xlbls = ax.get_xmajorticklabels()
+    for lbl in xlbls:
+        group = lbl.get_text().split("_")[0]
+        lbl.set_color(colours[group])
+
+    # Add titles, labels, and legend
+    plt.title("Burrows's Delta")
+    plt.xlabel("Texts")
+    plt.ylabel("Distance")
+    plt.tight_layout()
+
+    # Save or show plot
+    if save_as:
+        plt.savefig(save_as)
+        print(f"Dendrogram saved as '{save_as}'.")
+    plt.show()
+
+
+# Load, preprocess, and analyse texts
+texts = load_texts()
+preprocessed_texts = {key: preprocess(value) for key, value in texts.items()}
+frequency_matrix = compute_frequencies(preprocessed_texts, mfw=100)  # MFW set to 100
+z_scores = calculate_z_scores(frequency_matrix)
+delta_matrix = compute_delta(z_scores)
+
+# Extract groups for colour coding
+groups = extract_groups(delta_matrix.columns)
+
+# Plot Colour-Coded Dendrogram
+plot_coloured_dendrogram(delta_matrix, groups)
