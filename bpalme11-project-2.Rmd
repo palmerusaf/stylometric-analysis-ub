@@ -1,3 +1,8 @@
+## Setup
+
+```{python}
+
+```
 ```{python}
 from bs4 import BeautifulSoup
 from collections import Counter
@@ -12,8 +17,10 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import PCA
 import plotly.express as px
 import re
+```
 
-
+## Parsing
+```{python}
 # https://www.thetedkarchive.com/library/theo-slade-the-bombings-communications-of-ted-kaczynski-as-part-of-his-terror-campaign
 # extract udocs from html
 rows = []  # collect rows FAST
@@ -93,6 +100,10 @@ if current_letter is not None and contents:
 
 df = pd.DataFrame(rows, columns=["Doc Type", "rawTxt"])
 
+```
+
+## Plot 1
+```{python}
 
 def clean(text):
     text = text.lower()
@@ -128,6 +139,10 @@ fig = px.scatter_3d(
 
 fig.show()
 
+```
+
+## Plot 2
+```{python}
 
 # avg sent len box whisker plot
 def avgSent(text):
@@ -152,6 +167,10 @@ fig = px.box(
 # In his study, Reference GrieveGrieve (2007) finds that character n-grams (up to about 6-grams) can be useful as authorship markers along with various measures of word and punctuation distribution, and shows how with a decreasing number of candidate authors in a closed set, other features, including some measures of lexical richness and average word and sentence length, might have some role to play, but generally lack a strong predictive power.
 
 fig.show()
+```
+
+## Plot 3
+```{python}
 # https://www.cambridge.org/core/elements/idea-of-progress-in-forensic-authorship-analysis/6A4F7668B4831CCD7DBF74DECA3EBA06
 X = TfidfVectorizer(
     analyzer="char",
@@ -197,6 +216,10 @@ fig = px.scatter_3d(
 
 fig.show()
 
+```
+
+## Plot 4
+```{python}
 # legit stylometry
 # https://www.nature.com/articles/s41599-025-05986-3
 # burrows delta mds scatter
