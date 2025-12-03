@@ -201,6 +201,8 @@ fig.show()
 # burrows delta mds scatter
 
 
+# adapted from
+# https://github.com/jamesosullivan/stylometry/blob/main/burrows-delta-dendrogram.py
 # 1. Load texts from the folder
 def load_texts():
     texts = {}
