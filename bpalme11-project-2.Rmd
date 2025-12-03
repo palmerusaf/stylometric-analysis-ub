@@ -1,8 +1,5 @@
-## Setup
+## Imports
 
-```{python}
-
-```
 ```{python}
 from bs4 import BeautifulSoup
 from collections import Counter
@@ -196,6 +193,10 @@ fig = px.scatter_3d(
 )
 fig.show()
 
+```
+
+## Plot 4
+```{python}
 X = TfidfVectorizer(max_features=5000).fit_transform(df["cleanTxt"])
 
 pca = PCA(n_components=3)
@@ -218,7 +219,7 @@ fig.show()
 
 ```
 
-## Plot 4
+## Plot 5
 ```{python}
 # legit stylometry
 # https://www.nature.com/articles/s41599-025-05986-3
