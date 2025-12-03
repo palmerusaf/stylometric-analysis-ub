@@ -1,6 +1,4 @@
 from bs4 import BeautifulSoup
-import os
-import nltk
 from collections import Counter
 import pandas as pd
 import numpy as np
@@ -12,7 +10,6 @@ from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import PCA
 import plotly.express as px
-import pandas as pd
 import re
 
 
@@ -124,7 +121,7 @@ fig = px.scatter_3d(
     y="PC2",
     z="PC3",
     color="Doc Type",
-    title="TF-IDF 3D PCA Simple Bag of Words",
+    title="TF-IDF 3D PCA Bag of Words No Stop Words",
 )
 
 fig.show()
@@ -193,7 +190,7 @@ fig = px.scatter_3d(
     y="PC2",
     z="PC3",
     color="Doc Type",
-    title="TF-IDF 3D PCA Simple Bag of Words and Sent Length",
+    title="TF-IDF 3D PCA Bag of Words with Stop Words and Sent Length",
 )
 
 fig.show()
