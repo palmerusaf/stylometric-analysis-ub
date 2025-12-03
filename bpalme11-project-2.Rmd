@@ -134,7 +134,7 @@ fig = px.scatter_3d(
     x="PC1",
     y="PC2",
     z="PC3",
-    color="Doc Type",
+    color="Doc Type", height=700,
     title="TF-IDF 3D PCA Bag of Words No Stop Words",
 )
 
@@ -160,7 +160,7 @@ fig = px.box(
     x="Doc Type",
     y="Avg Sent Length",
     title="Average Sentence Length by Document Type",
-    color="Doc Type",
+    color="Doc Type", height=700,
     points="all",
 )
 
@@ -192,7 +192,7 @@ fig = px.scatter_3d(
     x="PC1",
     y="PC2",
     z="PC3",
-    color="Doc Type",
+    color="Doc Type", height=700,
     title="TF-IDF 3D PCA 6-grams Grieve (2007)",
 )
 fig.show()
@@ -215,7 +215,7 @@ fig = px.scatter_3d(
     x="PC1",
     y="PC2",
     z="PC3",
-    color="Doc Type",
+    color="Doc Type", height=700,
     title="TF-IDF 3D PCA Bag of Words with Stop Words and Sent Length",
 )
 
