@@ -197,7 +197,6 @@ fig.show()
 
 # legit stylometry
 # https://www.nature.com/articles/s41599-025-05986-3
-# https://fastdatascience.com/natural-language-processing/fast-stylometry-python-library/
 # burrows delta mds scatter
 
 
