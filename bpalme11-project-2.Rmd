@@ -24,7 +24,7 @@ import re
 ```{python}
 # https://www.thetedkarchive.com/library/theo-slade-the-bombings-communications-of-ted-kaczynski-as-part-of-his-terror-campaign
 # extract udocs from html
-rows = []  # collect rows FAST
+rows = []  
 with open("./u-docs.html") as f:
     soup = BeautifulSoup(f, "html.parser")
 for p in soup.find_all("p"):
