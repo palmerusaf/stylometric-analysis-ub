@@ -418,6 +418,10 @@ plot_coloured_dendrogram(delta_matrix, groups)
 ```
 
 ## Conclusion
+- Stylometry can be a useful tool in performing linguistic analysis.
+- However, it can be limited by the quantity and quality of text.
+- It can't directly determine if two texts are authored by the same person, only that they share a style.
+- It should not be used on its own to make critical decisions.
 
 ## Citations
 
