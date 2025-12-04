@@ -420,7 +420,7 @@ plot_coloured_dendrogram(delta_matrix, groups)
 ```
 
 ## Conclusion
-- Ted Kaczynski shares a writing style with the Unabomber letter, however so does the brother that turned him in.
+- Ted Kaczynski shares a writing style with the Unabomber letters, however so does the brother that turned him in.
 - Stylometry can be a useful tool in performing linguistic analysis, but this usefulness can be limited by the quantity and quality of text.
 - It can't directly determine if two texts are authored by the same person, only that they share a style.
 - It should not be used on its own to make critical decisions.
