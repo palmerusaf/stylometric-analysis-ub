@@ -7,6 +7,10 @@
 - In this report we will use the evolving field of stylometry combined with machine learning and data visualization to perform our own analysis.
 
 ## Ethical Concerns
+- Ted Kaczynski killed people in order to bring attention to his critiques of society. 
+- Kaczynski also lived in a representative democracy that, while imperfect, allowed for legitimate outlets to express those critiques.
+- Hiding in a cabin and mailing bombs to university professors is not one of those. It is an extraordinary act of cowardice.
+- We will not focus on his beliefs in this report but rather the applied use of stylometry.
 
 ## Imports
 
