@@ -243,7 +243,7 @@ fig.show()
 
 ```
 
-Here we see clustering in the manifesto and Darwin control documents. We also see tighter clustering between some Unabomber letters and Ted letters. However, we also some Unabomber letters are close to the brother's letters.
+Here we see clustering in the manifesto and Darwin control documents. Toggling these two datasets off, we also see tighter clustering between some Unabomber letters and Ted letters. However, we also some Unabomber letters are close to the brother's letters.
 
 ## Plot 4
 ```{python}
