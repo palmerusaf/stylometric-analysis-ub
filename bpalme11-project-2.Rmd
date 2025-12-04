@@ -192,6 +192,10 @@ fig.show()
 Here we notice a departure in styles between the two brothers with Ted having a longer average sentence length.
 
 ## Plot 3
+
+> In his study, Reference GrieveGrieve (2007) finds that character n-grams (up to about 6-grams) can be useful as authorship markers along with various measures of word and punctuation distribution, and shows how with a decreasing number of candidate authors in a closed set, other features, including some measures of lexical richness and average word and sentence length, might have some role to play, but generally lack a strong predictive power. - Tim Grant
+
+In this plot we use the same algorithm we used in the first plot, but this time we partition the data in two to six character partitions instead of words. We also leave in the stop words this time. This is said to measure the writing style more than just the content. Its worth noting that in the original linguistic analysis common misspellings in the Ted/Unabomber documents was one of the determining factors.
 ```{python}
 # https://www.cambridge.org/core/elements/idea-of-progress-in-forensic-authorship-analysis/6A4F7668B4831CCD7DBF74DECA3EBA06
 X = TfidfVectorizer(
@@ -219,6 +223,7 @@ fig = px.scatter_3d(
 fig.show()
 
 ```
+Here we see clustering in the manifesto and Darwin control documents. We also see tighter clustering between some Unabomber letters and Ted letters. However, we also some Unabomber letters are close to the brother's letters.
 
 ## Plot 4
 ```{python}
