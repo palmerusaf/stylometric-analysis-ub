@@ -40,6 +40,8 @@ import re
 - Below is the code use to extract these documents from the html that contains them.
 - We also include letters from his brother Dave, his manifesto, and letters from Charles Darwin as a control.
 
+
+### Unabomber Letters
 ```{python}
 # https://www.thetedkarchive.com/library/theo-slade-the-bombings-communications-of-ted-kaczynski-as-part-of-his-terror-campaign
 # extract udocs from html
@@ -56,6 +58,10 @@ for p in soup.find_all("p"):
     blkText = blk.get_text(strip=True, separator=" ")
     rows.append(("UB Letters", blkText))
 
+```
+
+### Unabomber Manifesto
+```{python}
 # https://archive.nytimes.com/www.nytimes.com/library/national/unabom-manifesto-1.html
 # extract uman from html
 with open("./u-man.html") as f:
@@ -66,6 +72,10 @@ for p in soup.find_all("p"):
         rows.append(("UB Man", text))
 
 
+```
+
+### Ted and Dave Letters
+```{python}
 # extract tdocs from html
 with open("./t-docs.html") as f:
     soup = BeautifulSoup(f, "html.parser")
@@ -86,6 +96,10 @@ for h4 in soup.find_all("h4"):
             contents.append(sib.get_text(strip=True, separator=" "))
         rows.append(("Dave Letters", " ".join(contents)))
 
+```
+
+### Charles Darwin Letters
+```{python}
 
 # darwin letters for a control
 # https://www.gutenberg.org/
