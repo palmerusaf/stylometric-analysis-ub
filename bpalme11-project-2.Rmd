@@ -31,6 +31,14 @@ import re
 ```
 
 ## Parsing
+- The FBI separated its documents into T-Docs and U-Docs.
+- The T-Docs are letters his brother sent in that include their correspondence back and forth.
+- The U-Docs are letters Kaczynski mailed anonymously to news organizations.
+- In addition to the letters Kaczynski also wrote a 35,000 word manifesto.
+- As of right now the best resource to obtain these documents is through a website called <thetedkarchive.com>
+- Below is the code use to extract these documents from the html that contains them.
+- We also include letters from his brother Dave, his manifesto, and letters from Charles Darwin as a control.
+
 ```{python}
 # https://www.thetedkarchive.com/library/theo-slade-the-bombings-communications-of-ted-kaczynski-as-part-of-his-terror-campaign
 # extract udocs from html
