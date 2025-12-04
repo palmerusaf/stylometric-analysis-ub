@@ -123,7 +123,7 @@ df = pd.DataFrame(rows, columns=["Doc Type", "rawTxt"])
 ```
 
 ## Plot 1
-In this first plot we run a TF-IDF algorithm over the words while at the same time removing stop words. Stop words include filler words such as "the" and "is". The was this algorithm works is by counting the frequency of each word in the document and scaling it by its inverse document frequency. Inverse document frequency simply punishes words commonly appear in the entire corpus.
+In this first plot we run a TF-IDF algorithm over the words while at the same time removing stop words. Stop words include filler words such as "the" and "is". The was this algorithm works is by counting the frequency of each word in the document and scaling it by its inverse document frequency. Inverse document frequency simply punishes words commonly appear in the entire corpus. Finally, we are left with a 5000 parameter array. We can't visualize 5000 dimension, so we squeeze this down to 3 dimensions by using principal component analysis. It basically takes a bunch of dimensions and correlates them together.
 ```{python}
 
 def clean(text):
