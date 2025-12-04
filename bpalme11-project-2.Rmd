@@ -165,6 +165,7 @@ Dr. James O'Sullivan is a researcher in the field of computer-assisted text anal
 <https://www.youtube.com/watch?v=dnFgVc8UNkE>
 
 ## Plot 2
+In this plot we take the average sentence length of each document and plot it using a box and whisker plot.
 ```{python}
 
 # avg sent len box whisker plot
@@ -186,11 +187,9 @@ fig = px.box(
     points="all",
 )
 
-
-# In his study, Reference GrieveGrieve (2007) finds that character n-grams (up to about 6-grams) can be useful as authorship markers along with various measures of word and punctuation distribution, and shows how with a decreasing number of candidate authors in a closed set, other features, including some measures of lexical richness and average word and sentence length, might have some role to play, but generally lack a strong predictive power.
-
 fig.show()
 ```
+Here we notice a departure in styles between the two brothers with Ted having a longer average sentence length.
 
 ## Plot 3
 ```{python}
