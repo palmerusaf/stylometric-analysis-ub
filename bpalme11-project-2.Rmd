@@ -2,10 +2,10 @@
 
 ## Background 
 
-- In 1996 infamous mathematician Ted Kaczynski also known as the Unabomber was arrested on domestic terrorism charges.
+- In 1996 infamous mathematician Ted Kaczynski, also known as the Unabomber, was arrested on domestic terrorism charges.
 - Part of what led to his arrest was the FBI's use of linguistics analysis of his writing.
 - This was before many of the advances in stylometry and much of this analysis was done manually.
-- In this report we will use the evolving field of stylometry combined with machine learning and data visualization to perform our own analysis algorithmically.
+- In this report we will use the evolving field of stylometry, combined with machine learning and data visualization to perform our own analysis algorithmically.
 
 ## Ethical Concerns
 - Ted Kaczynski killed people in order to bring attention to his critiques on society. 
