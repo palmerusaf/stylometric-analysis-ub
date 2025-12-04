@@ -1,6 +1,12 @@
+# Applying Stylometry to the Unabomber Case
+
 ## Background 
 
-## Disclaimer
+- In 1996 infamous mathematician Ted Kaczynski also known as the Unabomber was arrested on domestic terrorism charges.
+- Part of what led to his arrest was the FBI's use of linguistics analysis of his writing.
+- In this report we will use the evolving field of stylometry combined with machine learning and data visualization to perform our own analysis.
+
+## Ethical Concerns
 
 ## Imports
 
