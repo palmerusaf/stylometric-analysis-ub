@@ -122,6 +122,7 @@ df = pd.DataFrame(rows, columns=["Doc Type", "rawTxt"])
 ```
 
 ## Plot 1
+In this first plot we run a TF-IDF algorithm over the words while at the same time removing stop words. Stop words include filler words such as "the" and "is". The was this algorithm works is by counting the frequency of each word in the document and scaling it by its inverse document frequency. Inverse document frequency simply punishes words commonly appear in the entire corpus.
 ```{python}
 
 def clean(text):
@@ -159,6 +160,8 @@ fig = px.scatter_3d(
 fig.show()
 
 ```
+Dr. James O'Sullivan is a researcher in the field of computer-assisted text analysis. In the video below he states that when you remove stop words what you are left with is the content of the text rather than the writing style. We can see that in our visualization with the Darwin letters being orthogonal to the rest of the corpus. We also notice some overlap between the Ted letters and his brother's letters. This is expected as they are communicating back and forth on the same subjects.
+<https://www.youtube.com/watch?v=dnFgVc8UNkE>
 
 ## Plot 2
 ```{python}
