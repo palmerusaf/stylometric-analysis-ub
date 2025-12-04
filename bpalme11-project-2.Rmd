@@ -249,6 +249,7 @@ fig.show()
 Here we see clustering in the manifesto and Darwin control documents. Toggling these two datasets off, we also see tighter clustering between some Unabomber letters and Ted letters. However, we also some Unabomber letters are close to the brother's letters.
 
 ## Plot 4
+In this plot we combine the method from our first plot with our sentence length feature. This time we are leaving in stop words since we are interested in writing style. Our goal here is to try to use the difference in Ted's sentence length to try to separate his writing style from his brother.
 
 ```{python}
 X = TfidfVectorizer(max_features=5000).fit_transform(df["cleanTxt"])
@@ -272,6 +273,7 @@ fig = px.scatter_3d(
 fig.show()
 
 ```
+As we can see after turning off the manifesto and Darwin datasets we had limited success. While we technically have slightly more Unabomber points clustered to Ted letters, it isn't statistically significant. This could be a failure in our data. In Dr. O'Sullivan's reports he was performing stylometry on entire novels. Here we are performing it on short letters. There is another possibility. Perhaps we should expect this result. After all it *does* make sense that two brothers raised together would naturally share a stylometric signature.
 
 ## Plot 5
 The code below is mostly not my own. It has been adapted from Dr. O'Sullivan's November 2025 paper in Nature. In it, he uses Burrow's Delta in combination with a dendrogram diagram to analyze human versus AI generated texts. I have adapted the `load_texts` function to work with our data frame. I personally had trouble gaining any insights with this visualization. However, I wanted to include it for completeness, as Burrow's Delta seems to be a popular method in stylometry. You can find a link to his paper and code repository below.
