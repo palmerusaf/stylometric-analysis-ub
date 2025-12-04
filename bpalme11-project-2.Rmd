@@ -246,6 +246,7 @@ fig.show()
 Here we see clustering in the manifesto and Darwin control documents. Toggling these two datasets off, we also see tighter clustering between some Unabomber letters and Ted letters. However, we also some Unabomber letters are close to the brother's letters.
 
 ## Plot 4
+
 ```{python}
 X = TfidfVectorizer(max_features=5000).fit_transform(df["cleanTxt"])
 
@@ -270,6 +271,9 @@ fig.show()
 ```
 
 ## Plot 5
+The code below is mostly not my own. It has been adapted from Dr. O'Sullivan's November 2025 paper in Nature. In it, he uses Burrow's Delta in combination with a dendrogram diagram to analyze human versus AI generated texts. I have adapted the `load_texts` function to work with our data frame. I personally had trouble gaining any insights with this visualization. However, I wanted to include it for completeness, as Burrow's Delta seems to be a popular method in stylometry. You can find a link to his paper and code repository below.
+- <https://www.nature.com/articles/s41599-025-05986-3>
+- <https://github.com/jamesosullivan/stylometry/blob/main/burrows-delta-dendrogram.py>
 ```{python}
 # legit stylometry
 # https://www.nature.com/articles/s41599-025-05986-3
