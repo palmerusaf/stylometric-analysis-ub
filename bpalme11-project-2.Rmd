@@ -392,6 +392,8 @@ groups = extract_groups(delta_matrix.columns)
 plot_coloured_dendrogram(delta_matrix, groups)
 ```
 
+## Conclusion
+
 ## Citations
 
 - O’Sullivan, J. Stylometric comparisons of human versus AI-generated creative writing. Humanit Soc Sci Commun 12, 1708 (2025). https://doi.org/10.1057/s41599-025-05986-3
