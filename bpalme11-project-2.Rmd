@@ -124,6 +124,7 @@ df = pd.DataFrame(rows, columns=["Doc Type", "rawTxt"])
 
 ## Plot 1
 In this first plot we run a TF-IDF algorithm over the words while at the same time removing stop words. Stop words include filler words such as "the" and "is". The was this algorithm works is by counting the frequency of each word in the document and scaling it by its inverse document frequency. Inverse document frequency simply punishes words commonly appear in the entire corpus. Finally, we are left with a 5000 parameter array. We can't visualize 5000 dimension, so we squeeze this down to 3 dimensions by using principal component analysis. It basically takes a bunch of dimensions and correlates them together.
+
 ```{python}
 
 def clean(text):
@@ -161,11 +162,13 @@ fig = px.scatter_3d(
 fig.show()
 
 ```
+
 Dr. James O'Sullivan is a researcher in the field of computer-assisted text analysis. In the video below he states that when you remove stop words what you are left with is the content of the text rather than the writing style. We can see that in our visualization with the Darwin letters being orthogonal to the rest of the corpus. We also notice some overlap between the Ted letters and his brother's letters. This is expected as they are communicating back and forth on the same subjects.
 <https://www.youtube.com/watch?v=dnFgVc8UNkE>
 
 ## Plot 2
 In this plot we take the average sentence length of each document and plot it using a box and whisker plot.
+
 ```{python}
 
 # avg sent len box whisker plot
@@ -189,6 +192,7 @@ fig = px.box(
 
 fig.show()
 ```
+
 Here we notice a departure in styles between the two brothers with Ted having a longer average sentence length.
 
 ## Plot 3
@@ -196,6 +200,7 @@ Here we notice a departure in styles between the two brothers with Ted having a 
 > In his study, Reference GrieveGrieve (2007) finds that character n-grams (up to about 6-grams) can be useful as authorship markers along with various measures of word and punctuation distribution, and shows how with a decreasing number of candidate authors in a closed set, other features, including some measures of lexical richness and average word and sentence length, might have some role to play, but generally lack a strong predictive power. - Tim Grant
 
 In this plot we use the same algorithm we used in the first plot, but this time we partition the data in two to six character partitions instead of words. We also leave in the stop words this time. This is said to measure the writing style more than just the content. Its worth noting that in the original linguistic analysis common misspellings in the Ted/Unabomber documents was one of the determining factors.
+
 ```{python}
 # https://www.cambridge.org/core/elements/idea-of-progress-in-forensic-authorship-analysis/6A4F7668B4831CCD7DBF74DECA3EBA06
 X = TfidfVectorizer(
@@ -223,6 +228,7 @@ fig = px.scatter_3d(
 fig.show()
 
 ```
+
 Here we see clustering in the manifesto and Darwin control documents. We also see tighter clustering between some Unabomber letters and Ted letters. However, we also some Unabomber letters are close to the brother's letters.
 
 ## Plot 4
